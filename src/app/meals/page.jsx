@@ -1,45 +1,34 @@
-"use client";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import MealsSearchInput from "./component/MealsSearchInput";
 
-export default function Meals() {
-  const [meals, setMeals] = useState([]);
-  const [search, setSearch] = useState("");
+export default async function Meals({ searchParams }) {
+  const query = await searchParams;
+  console.log(query);
 
   const getMeals = async () => {
     try {
       const res = await fetch(
-        `https://www.themealdb.com/api/json/v1/1/search.php?s=${search}`
+        `https://www.themealdb.com/api/json/v1/1/search.php?s=${query?.search}`
       );
       const data = await res.json();
-      setMeals(data.meals || []);
-      console.log(data.meals);
-      return data.meals;
+      //   setMeals(data.meals || []);
+      console.log(data?.meals);
+      return data?.meals;
     } catch (error) {
       console.log(error);
       return [];
     }
   };
 
-  useEffect(() => {
-    getMeals();
-  }, [search]);
+  const meals = await getMeals();
 
   return (
     <div>
       <div className="text-center bg-gray-500 py-8">
-        <input
-          type="text"
-          className="p-2 border-2"
-          placeholder="Search Melas"
-          name=""
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          id=""
-        />
+        <MealsSearchInput />
       </div>
       <div className="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-6 p-6">
-        {meals.map((meal) => (
+        {meals?.map((meal) => (
           <div
             key={meal.idMeal}
             className="bg-white shadow-lg rounded-xl overflow-hidden transition-transform transform hover:scale-105 hover:shadow-2xl p-4"
