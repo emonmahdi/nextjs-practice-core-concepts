@@ -1,6 +1,12 @@
 import Link from "next/link";
 import React from "react";
 
+export const metadata = {
+  title: "NextJs My Blogs",
+  description: "Make your own Blogs",
+};
+
+
 const blogs = [
   {
     id: 1,

@@ -1,11 +1,28 @@
 import React from 'react'
 
+
+
+
+
 const getRecipe = async (recipe_id) => {
-    const res = await fetch(`https://dummyjson.com/recipes/${recipe_id}`);
-    const data = await res.json();
-    // console.log(data.recipes);
-    return data
+  const res = await fetch(`https://dummyjson.com/recipes/${recipe_id}`);
+  const data = await res.json();
+  // console.log(data.recipes);
+  return data;
+};
+
+export async function generateMetadata({ params }) {
+  // read route params
+  const id = await params?.id;
+
+  // fetch data
+  const singleData = await getRecipe(id);
+
+  return {
+    title: singleData.name,
+    description: singleData?.description,
   };
+}
 
 export default async function SingleRecipe({params}) {
     const id = await params.id

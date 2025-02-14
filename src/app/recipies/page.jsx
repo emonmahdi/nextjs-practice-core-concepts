@@ -1,5 +1,11 @@
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+
+export const metadata = {
+  title: "NextJs App Recipes",
+  description: "Make your own recipes",
+};
 
 const getAllRecipies = async () => {
   const res = await fetch("https://dummyjson.com/recipes");
@@ -19,8 +25,10 @@ export default async function Recipes() {
             key={recipe.id}
             className="bg-white shadow-lg rounded-xl overflow-hidden transition-transform transform hover:scale-105 hover:shadow-2xl"
           >
-            <img
+            <Image
               src={recipe.image}
+              width={267}
+              height={192}
               className="w-full h-48 object-cover"
               alt={recipe.name}
             />
@@ -29,13 +37,13 @@ export default async function Recipes() {
                 {recipe.name}
               </h2>
               <p className="text-sm text-gray-500 mt-1">
-               Type: {recipe.mealType[0]}
+                Type: {recipe.mealType[0]}
               </p>
-           <Link href={`recipies/${recipe.id}`}>
-           <button className="mt-3 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition">
-                View Recipe
-              </button>
-           </Link>
+              <Link href={`recipies/${recipe.id}`}>
+                <button className="mt-3 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition">
+                  View Recipe
+                </button>
+              </Link>
             </div>
           </div>
         ))}
